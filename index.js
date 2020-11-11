@@ -1,23 +1,41 @@
-
 const express = require('express');
-const app = express();
-const restaurantsRouter = require ('./router/restaurants');
-
 const hbs = require('express-handlebars');
-app.engine('hbs',hbs({extname:'hbs'}));
+const restaurants = require('./routes/restaurants');
+
+const path = require('path');
+
+//creater Server
+const app = express();
+
+/*app.get('/',(req,res) => {
+    res.send('<h1>Hello Restaurant API <h1>');
+});*/
+
+//Template engine setting
+app.engine('hbs', hbs({
+    extname: 'hbs'
+}));
 app.set('view engine', 'hbs');
-// app.use(express.static(path.join(__dirname,'public')));
+
+//Middleware เพื่ออ่าน req.body
+app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.json());
-app.use(express.urlencoded({extended:false}))
+app.use(express.urlencoded({
+    extended: false
+}))
 
 
 
-// app.get('/',(req,res)=>{
-//     res.send('<h1>Hello API</h1>');
 
-// });
-app.use('/',restaurantsRouter);
+//router
+app.use('/', restaurants);
 
-app.listen(3000,()=>{
-    console.log('listening to port 3000')
-});
+
+const PORT = process.env.PORT || 8080;
+
+app.listen(
+  PORT,
+  () => {
+    console.log(`Listening to port ${PORT}`);
+  }
+);
