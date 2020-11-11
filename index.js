@@ -1,6 +1,6 @@
 const express = require('express');
 const hbs = require('express-handlebars');
-const restaurants = require('./routes/restaurants');
+const restaurantRouter = require('./routes/restaurants');
 
 const path = require('path');
 
@@ -28,7 +28,7 @@ app.use(express.urlencoded({
 
 
 //router
-app.use('/', restaurants);
+app.use('/', restaurantRouter);
 
 
 const PORT = process.env.PORT || 8080;
